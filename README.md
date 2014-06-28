@@ -1,4 +1,4 @@
 Katana
 ======
 
-Katana Game Engine
+Katana - The Game Engine
