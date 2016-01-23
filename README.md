@@ -1,14 +1,53 @@
 Katana
 ======
 
-Katana - The Game Engine
+**Katana** is a free and open source game engine based on the Entity-Component-System (ECS) architecture. It is cross-platform, built and tested currently in C++ for desktop environment.
 
-The master branch is currently empty. See develop branch for ongoing development.
 
-## New development starting soon
+# Building
 
-The current development is soon to be discontinued and is to be replaced by completely redesigned engine.
+You will first need to install the dependencies to build the engine.
 
-The new engine will be based on **Entity-Component-System** allowing the engine to be real flexible in terms of its capabilities. See the following project for the inspiration of the new system.
+### GLFW
 
-> https://github.com/bibekdahal/CarRace
+GLFW is used to create windows with OpenGL contexts and manage windows and inputs.
+
+Download the source code from the [GLFW download page](http://www.glfw.org/download.html). For windows, you may directly download the library binaries. For linux systems, you can compile from the source code.
+
+```
+# Install GLFW dependencies
+# For Debian systems, you can install them with apt-get
+sudo apt-get install cmake xorg-dev libgl1-mesa-dev
+
+# Install GLFW from its directory
+cmake .
+make
+sudo make install
+```
+
+### GLM
+
+GLM is OpenGL Mathematics library containing header only implementation based on GLSL specifications. You can download the headers directly from its [github page](https://github.com/g-truc/glm/releases).
+
+```
+# For Debian systems, you may install it with apt-get
+sudo apt-get install libglm-dev
+```
+
+### GLEW
+
+[GLEW](http://glew.sourceforge.net/index.html) provides efficient extension loading library for OpenGL applications.
+
+```
+# For Debian systems, you may install it with apt-get
+sudo apt-get install libglew-dev
+```
+
+### Building Katana
+
+Simply execute `make` to build the binaries, which are built into the *bin* directory. If error is encountered, try to clean up the previous build outputs using `make clean`.
+
+```
+make clean
+make
+```
