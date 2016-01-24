@@ -1,5 +1,5 @@
 ## Directories for source files
-SRC_DIR := 
+SRC_DIRS := utils
 
 
 ## Directories to build files into
@@ -8,7 +8,7 @@ BIN_DIR := bin
 
 
 ## List of all c++ files to compile
-CPP_FILES := $(wildcard $(SRC_DIRS:%=src/%/*.cpp)) src/*.cpp
+CPP_FILES := $(wildcard $(SRC_DIRS:%=src/%/*.cpp)) $(wildcard src/*.cpp)
 
 ## List of all object files to generate
 OBJ_FILES = $(addprefix $(OBJ_DIR)/,$(CPP_FILES:src/%.cpp=%.o))
@@ -30,7 +30,7 @@ $(BIN_DIR)/katana-test: $(OBJ_FILES) | $(BIN_DIR)
 	$(CXX) -o $@ $^ $(LDFLAGS)
 
 $(OBJ_DIR)/%.o: src/%.cpp | $(OBJ_DIR)
-	$(CXX) -c -o $@ $< $(CXXFLAGS) 
+	$(CXX) -c -o $@ $< $(CXXFLAGS)
 
 
 $(BIN_DIR):
