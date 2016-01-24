@@ -2,11 +2,23 @@
 #include <TestApp.h>
 
 #include <ecs/ecs.h>
+#include <material/Shader.h>
 
 
 int main()
 {
-    TestApp app;
-    app.Run();
+    try
+    {
+        TestApp app;
+        
+        Shader vs("shaders/vs_test.glsl", GL_VERTEX_SHADER);
+        Shader fs("shaders/fs_test.glsl", GL_FRAGMENT_SHADER);
+
+        app.Run();
+    }
+    catch (const std::exception& e)
+    {
+        std::cout << e.what() << std::endl;
+    }
     return 0;
 }

@@ -8,6 +8,11 @@ Application::Application()
     {
         throw Exception("Couldn't intiailize GLFW");
     }
+
+    // Try to set opengl context version 3.3
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+
     m_window = glfwCreateWindow(800, 600, "Katana Test", 0, 0);
     glfwMakeContextCurrent(m_window);
 
