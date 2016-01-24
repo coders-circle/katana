@@ -1,5 +1,8 @@
 #include <Application.h>
 #include <model/Mesh.h>
+#include <ecs/ecs.h>
+#include <ecs/Transform.h>
+#include <ecs/Camera.h>
 
 
 // Test Mesh Data
@@ -22,32 +25,37 @@ public:
         testMat("textures/test.jpg")
     {
         testMat.color = glm::vec4(1,0,0,1);
+        camera.Add<Camera>(800, 600);
+        camera.Add<Transform>(glm::vec3(0, 0, 2));
     }
 
 private:
     glm::mat4 modelMat;
-    glm::mat4 projection;
+    Entity camera;
+
     TestMaterial testMat;
     Mesh testMesh;
 
     void OnResize(int width, int height)
     {
         glViewport(0, 0, width, height);
-        projection = glm::perspective(120.0f, float(width)/float(height),
-            0.1f, 10000.0f);
+        camera.Get<Camera>()->Set(width, height, 120, 0.1f, 10000.0f);
     }
 
     void OnRender()
     {
+        glm::mat4 vp = camera.Get<Camera>()->GetProjection()
+            * camera.Get<Transform>()->GetWorldInverse();
+            
         // Draw the test mesh with test material
-        testMesh.Draw(&testMat, modelMat, projection);
+        testMesh.Draw(&testMat, modelMat, vp);
     }
 
     void OnUpdate(float dt)
     {
         modelMat =
-            glm::translate(glm::mat4(), glm::vec3(0, 0, -2.f)) *
             glm::rotate(glm::mat4(), m_timer.GetTotalTime(),
-                glm::vec3(0, 1, 0));
+                glm::vec3(0, 1, 0)
+            );
     }
 };
