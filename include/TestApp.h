@@ -1,58 +1,52 @@
 #include <Application.h>
-#include <material/Material.h>
+#include <model/Mesh.h>
 
 
+// Test Mesh Data
+std::vector<Vertex> vertices = std::vector<Vertex>{
+    glm::vec3(-0.5f, -0.5f, 0.0f),
+    glm::vec3(0.5f, -0.5f, 0.0f),
+    glm::vec3(0.5f, 0.5f, 0.0f),
+    glm::vec3(-0.5f, 0.5f, 0.0f),
+};
+
+std::vector<GLuint> indices = { 0, 1, 2, 0, 2, 3 };
+
+
+// Test application
 class TestApp: public Application
 {
 public:
     TestApp()
+        : testMesh(vertices, indices)
     {
-        GLfloat vertices[] = {
-            -0.5f, -0.5f, 0.0f,
-            0.5f, -0.5f, 0.0f,
-            0.0f, 0.5f, 0.0f,
-        };
-
-        GLuint VBO;
-        glGenBuffers(1, &VBO);
-
-        glGenVertexArrays(1, &VAO);
-        glBindVertexArray(VAO);
-
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*) 0);
-        glEnableVertexAttribArray(0);
-
-        glBindVertexArray(0);
-
-        test.color = glm::vec4(1,0,0,1);
+        testMat.color = glm::vec4(1,0,0,1);
     }
 
 private:
-    TestMaterial test;
-    GLuint VAO;
-    glm::mat4 model;
+    glm::mat4 modelMat;
+    glm::mat4 projection;
+    TestMaterial testMat;
+    Mesh testMesh;
+
+    void OnResize(int width, int height)
+    {
+        glViewport(0, 0, width, height);
+        projection = glm::perspective(120.0f, float(width)/float(height),
+            0.1f, 10000.0f);
+    }
 
     void OnRender()
     {
-        test.Use();
-
-        Program& p = test.GetProgram();
-        if (p.DoUseStdTransforms())
-        {
-            p.SetUniform("mvp", model);
-            p.SetUniform("model", model);
-        }
-        glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
-        glBindVertexArray(0);
+        // Draw the test mesh with test material
+        testMesh.Draw(&testMat, modelMat, projection);
     }
 
     void OnUpdate(float dt)
     {
-        model = glm::rotate(glm::mat4(), m_timer.GetTotalTime(),
-            glm::vec3(0, 1, 0));
-        // std::cout << dt << " seconds passed" << std::endl;
+        modelMat =
+            glm::translate(glm::mat4(), glm::vec3(0, 0, -2.f)) *
+            glm::rotate(glm::mat4(), m_timer.GetTotalTime(),
+                glm::vec3(0, 1, 0));
     }
 };

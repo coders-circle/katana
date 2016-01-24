@@ -15,8 +15,9 @@ public:
 
 protected:
     GLFWwindow* m_window;
-    virtual void OnUpdate(float);
-    virtual void OnRender();
+    virtual void OnUpdate(float) {}
+    virtual void OnRender() {}
+    virtual void OnResize(int width, int height) {}
 
     Timer m_timer;
 };

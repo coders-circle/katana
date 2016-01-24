@@ -1,5 +1,5 @@
 ## Directories for source files
-SRC_DIRS := utils ecs material
+SRC_DIRS := utils ecs material model
 
 
 ## Directories to build files into
