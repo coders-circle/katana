@@ -8,6 +8,5 @@ int main()
 {
     Application app;
     app.Run();
-    test();
     return 0;
 }

@@ -1,4 +1,5 @@
 #pragma once
+#include <ecs/Component.h>
 
 
 // Entity class storing a list of components
@@ -8,11 +9,17 @@ public:
     
     // Create and add a new component
     template<class T, class... Args>
-    T* AddComponent(Args... args)
+    T* Add(Args... args)
     {
         T* component = new T(args...);
         m_components[T::GetStaticId()] = component;
         return component;
+    }
+
+    // Check if entity has a component
+    bool Has(int id)
+    {
+        return m_components.find(id) != m_components.end();
     }
 
     // On destruction, destroy all components
