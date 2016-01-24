@@ -25,6 +25,16 @@ Application::~Application()
 }
 
 
+void Application::OnUpdate(float dt)
+{
+}
+
+
+void Application::OnRender()
+{
+}
+
+
 void Application::Run()
 {
     while (!glfwWindowShouldClose(m_window))
@@ -32,5 +42,7 @@ void Application::Run()
         glClear(GL_COLOR_BUFFER_BIT);
         glfwSwapBuffers(m_window);
         glfwPollEvents();
+        this->OnUpdate(0);
+        this->OnRender();
     }
 }

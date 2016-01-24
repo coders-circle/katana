@@ -1,10 +1,10 @@
 #include <stdinc.h>
-#include <Application.h>
+#include <TestApp.h>
 
 
 int main()
 {
-    Application app;
+    TestApp app;
     app.Run();
     return 0;
 }

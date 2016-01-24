@@ -10,6 +10,8 @@ public:
     Application();
     ~Application();
     void Run();
-private:
+protected:
     GLFWwindow* m_window;
+    virtual void OnUpdate(float);
+    virtual void OnRender();
 };
