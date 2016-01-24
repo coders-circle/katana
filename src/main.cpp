@@ -1,9 +1,6 @@
 #include <stdinc.h>
 #include <TestApp.h>
 
-#include <ecs/ecs.h>
-#include <material/Material.h>
-
 
 int main()
 {

@@ -43,6 +43,16 @@ sudo apt-get install libglm-dev
 sudo apt-get install libglew-dev
 ```
 
+
+### SOIL
+[SOIL](http://www.lonesock.net/soil.html) provides tiny library for uploading textures into OpenGL.
+
+```
+# For Debian systems, you may install it with apt-get
+sudo apt-get install libsoil-dev
+```
+
+
 ### Building Katana
 
 Simply execute `make` to build the binaries, which are built into the *bin* directory. If error is encountered, try to clean up the previous build outputs using `make clean`.

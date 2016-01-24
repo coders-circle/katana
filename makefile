@@ -1,5 +1,5 @@
 ## Directories for source files
-SRC_DIRS := utils ecs material model
+SRC_DIRS := utils ecs material model texture
 
 
 ## Directories to build files into
@@ -17,7 +17,7 @@ OBJ_FILES = $(addprefix $(OBJ_DIR)/,$(CPP_FILES:src/%.cpp=%.o))
 ## Compiler, compiler and linker flags and libaries to use
 CXX := g++
 CXXLIBS := `pkg-config --cflags glfw3`
-LDLIBS := -lGLEW -lGL `pkg-config --libs --static glfw3`
+LDLIBS := -lGLEW -lGL `pkg-config --libs --static glfw3` -lSOIL
 
 CXXFLAGS := -I include -MMD --std=c++11 $(CXXLIBS)
 LDFLAGS := --std=c++11 $(LDLIBS)

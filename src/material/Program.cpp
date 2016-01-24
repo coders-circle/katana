@@ -35,4 +35,6 @@ Program::Program(const std::vector<Shader>& shaders,
 
     if (useStdTransforms)
         AddStdTransforms();
+
+    glUseProgram(m_program);
 }

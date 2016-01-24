@@ -4,10 +4,10 @@
 
 // Test Mesh Data
 std::vector<Vertex> vertices = std::vector<Vertex>{
-    glm::vec3(-0.5f, -0.5f, 0.0f),
-    glm::vec3(0.5f, -0.5f, 0.0f),
-    glm::vec3(0.5f, 0.5f, 0.0f),
-    glm::vec3(-0.5f, 0.5f, 0.0f),
+    Vertex(glm::vec3(-0.5f, -0.5f, 0.0f), glm::vec2(0.0f, 0.0f)),
+    Vertex(glm::vec3( 0.5f, -0.5f, 0.0f), glm::vec2(1.0f, 0.0f)),
+    Vertex(glm::vec3( 0.5f,  0.5f, 0.0f), glm::vec2(1.0f, 1.0f)),
+    Vertex(glm::vec3(-0.5f,  0.5f, 0.0f), glm::vec2(0.0f, 1.0f)),
 };
 
 std::vector<GLuint> indices = { 0, 1, 2, 0, 2, 3 };
@@ -18,7 +18,8 @@ class TestApp: public Application
 {
 public:
     TestApp()
-        : testMesh(vertices, indices)
+        : testMesh(vertices, indices),
+        testMat("textures/test.jpg")
     {
         testMat.color = glm::vec4(1,0,0,1);
     }
