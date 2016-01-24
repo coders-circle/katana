@@ -1,5 +1,5 @@
 ## Directories for source files
-SRC_DIRS := utils
+SRC_DIRS := utils ecs
 
 
 ## Directories to build files into

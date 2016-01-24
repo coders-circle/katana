@@ -1,6 +1,8 @@
 #include <stdinc.h>
 #include <TestApp.h>
 
+#include <ecs/ecs.h>
+
 
 int main()
 {

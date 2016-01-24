@@ -4,8 +4,11 @@
 
 #include <iostream>
 #include <vector>
+#include <map>
 #include <string>
 #include <functional>
+#include <typeinfo>
+#include <algorithm>
 
 
 // GLM
@@ -25,3 +28,4 @@
 // common include files that may be needed by almost every source.
 
 #include <utils/Exception.h>
+#include <utils/ListUtils.h>
