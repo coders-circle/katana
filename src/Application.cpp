@@ -16,6 +16,7 @@ Application::Application()
     m_window = glfwCreateWindow(800, 600, "Katana Test", 0, 0);
     glfwMakeContextCurrent(m_window);
 
+    glewExperimental = GL_TRUE;
     GLenum err = glewInit();
     if (err != GLEW_OK)
     {
@@ -48,13 +49,15 @@ void Application::Run()
 {
     while (!glfwWindowShouldClose(m_window))
     {
-        glClear(GL_COLOR_BUFFER_BIT);
-        glfwSwapBuffers(m_window);
-        glfwPollEvents();
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
         m_timer.Update([this](float dt)
         {
             OnUpdate(dt);
         });
         this->OnRender();
+
+        glfwSwapBuffers(m_window);
+        glfwPollEvents();
     }
 }

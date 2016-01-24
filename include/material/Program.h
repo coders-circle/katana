@@ -17,13 +17,14 @@ public:
 class Program
 {
 public:
-    Program(const std::vector<Shader>& shaders);
+    Program(const std::vector<Shader>& shaders,
+        bool useStdTransforms=true);
     ~Program()
     {
         glDeleteProgram(m_program);
     }
 
-    GLuint GetProgramObject() { return m_program; }
+    GLuint GetProgramObject() const { return m_program; }
 
     // Add a uniform
     GLint AddUniform(const std::string& uniform_name)
@@ -37,6 +38,12 @@ public:
     GLint GetUniform(const std::string& uniform_name)
     {
         return m_uniforms[uniform_name];
+    }
+
+    void AddStdTransforms()
+    {
+        AddUniform("mvpMatrix");
+        AddUniform("modelMatrix");
     }
 
 
@@ -56,10 +63,13 @@ public:
 
 
     // Use program
-    void Use()
+    void Use() const
     {
         glUseProgram(m_program);
     }
+
+
+    bool DoUseStdTransforms() const { return m_useStdTransforms; }
 
 private:
     // The GLSL program object
@@ -67,4 +77,7 @@ private:
 
     // The uniforms
     std::map<std::string, GLint> m_uniforms;
+
+    // Whether the standard transformation uniforms are avialbale
+    bool m_useStdTransforms;
 };

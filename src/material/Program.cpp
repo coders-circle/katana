@@ -2,7 +2,9 @@
 #include <material/Program.h>
 
 
-Program::Program(const std::vector<Shader>& shaders)
+Program::Program(const std::vector<Shader>& shaders,
+    bool useStdTransforms)
+    : m_useStdTransforms(useStdTransforms)
 {
     // Create program object
     m_program = glCreateProgram();
@@ -30,4 +32,7 @@ Program::Program(const std::vector<Shader>& shaders)
     // Detach after link
     for (const Shader& s: shaders)
         s.DetachFrom(m_program);
+
+    if (useStdTransforms)
+        AddStdTransforms();
 }

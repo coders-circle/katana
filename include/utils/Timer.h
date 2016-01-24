@@ -17,7 +17,9 @@ public:
 
     // TODO: void SetMaxFPS(float maxFPS) { m_maxFPS = maxFPS; }
 
-    unsigned int GetFPS() { return m_fps; }
+    float GetTotalTime() const { return (float)m_totalTime; }
+
+    unsigned int GetFPS() const { return m_fps; }
 
     void Update(std::function<void(float)> update) 
     {
