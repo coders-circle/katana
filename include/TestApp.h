@@ -8,6 +8,10 @@ class TestApp: public Application
 private:
     void OnRender()
     {
-        std::cout<<"Hello World!"<<std::endl;
+    }
+
+    void OnUpdate(float dt)
+    {
+        std::cout << dt << " seconds passed" << std::endl;
     }
 };

@@ -1,6 +1,8 @@
+#include <stdinc.h>
 #include <Application.h>
 
 Application::Application()
+    : m_timer(60)
 {
     if (!glfwInit())
     {
@@ -16,6 +18,8 @@ Application::Application()
             + reinterpret_cast<const char*>(glewGetErrorString(GLEW_VERSION)));
     }
     glClearColor(0.396f, 0.612f, 0.937f, 1.0f);
+
+    m_timer.Reset(60);
 }
 
 
@@ -42,7 +46,10 @@ void Application::Run()
         glClear(GL_COLOR_BUFFER_BIT);
         glfwSwapBuffers(m_window);
         glfwPollEvents();
-        this->OnUpdate(0);
+        m_timer.Update([this](float dt)
+        {
+            OnUpdate(dt);
+        });
         this->OnRender();
     }
 }
