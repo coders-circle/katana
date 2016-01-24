@@ -2,7 +2,7 @@
 #include <TestApp.h>
 
 #include <ecs/ecs.h>
-#include <material/Shader.h>
+#include <material/Program.h>
 
 
 int main()
@@ -11,8 +11,10 @@ int main()
     {
         TestApp app;
         
-        Shader vs("shaders/vs_test.glsl", GL_VERTEX_SHADER);
-        Shader fs("shaders/fs_test.glsl", GL_FRAGMENT_SHADER);
+        Program m(std::vector<Shader> {
+            Shader("shaders/vs_test.glsl", GL_VERTEX_SHADER),
+            Shader("shaders/fs_test.glsl", GL_FRAGMENT_SHADER),
+        });
 
         app.Run();
     }

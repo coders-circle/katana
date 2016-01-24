@@ -19,15 +19,25 @@ class Shader
 {
 public:
     Shader(const std::string& filename, GLenum shaderType);
+    ~Shader()
+    {
+        glDeleteShader(m_shader);
+    }
 
-    GLuint GetShaderObject() { return m_shader; }
+    GLuint GetShaderObject() const { return m_shader; }
 
-    void AttachToProgram(GLuint program)
+    void AttachTo(GLuint program) const
     {
         glAttachShader(program, m_shader);
     }
 
+    void DetachFrom(GLuint program) const
+    {
+        glDetachShader(program, m_shader);
+    }
+
 
 private:
+    // The shader object
     GLuint m_shader;
 };
