@@ -1,19 +1,9 @@
 #include <Application.h>
 #include <model/Mesh.h>
+#include <model/Model.h>
 #include <ecs/ecs.h>
 #include <component/Transform.h>
 #include <component/Camera.h>
-
-
-// Test Mesh Data
-std::vector<Vertex> vertices = std::vector<Vertex>{
-    Vertex(glm::vec3(-0.5f, -0.5f, 0.0f), glm::vec2(0.0f, 0.0f)),
-    Vertex(glm::vec3( 0.5f, -0.5f, 0.0f), glm::vec2(1.0f, 0.0f)),
-    Vertex(glm::vec3( 0.5f,  0.5f, 0.0f), glm::vec2(1.0f, 1.0f)),
-    Vertex(glm::vec3(-0.5f,  0.5f, 0.0f), glm::vec2(0.0f, 1.0f)),
-};
-
-std::vector<GLuint> indices = { 0, 1, 2, 0, 2, 3 };
 
 
 // Test application
@@ -21,13 +11,13 @@ class TestApp: public Application
 {
 public:
     TestApp() :
-        testMesh(vertices, indices),
         testMat("textures/test.jpg"),
+        testModel("../model-converter/bin/homer.out"),
         input(800, 600)
     {
         testMat.color = glm::vec4(1,0,0,1);
         camera.Add<Camera>(800, 600);
-        camera.Add<Transform>(glm::vec3(0, 0, 2));
+        camera.Add<Transform>(glm::vec3(0, 0, 100));
 
         SetInput(&input);
     }
@@ -37,7 +27,7 @@ private:
     Entity camera;
 
     TestMaterial testMat;
-    Mesh testMesh;
+    Model testModel;
 
     Input input;
 
@@ -52,8 +42,8 @@ private:
         glm::mat4 vp = camera.Get<Camera>()->GetProjection()
             * camera.Get<Transform>()->GetWorldInverse();
             
-        // Draw the test mesh with test material
-        testMesh.Draw(&testMat, modelMat, vp);
+        // Draw the test model with test material
+        testModel.Draw(&testMat, modelMat, vp);
     }
 
     void OnUpdate(float dt)

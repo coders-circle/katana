@@ -31,6 +31,7 @@ Application::Application() :
     // OpenGL initialization
     glClearColor(0.396f, 0.612f, 0.937f, 1.0f);
     glEnable(GL_DEPTH_TEST);
+    // glEnable(GL_CULL_FACE);
 
 
     // Set callbacks

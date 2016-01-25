@@ -27,6 +27,10 @@ Mesh::Mesh(const std::vector<Vertex>& vertices,
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex),
         (GLvoid*)offsetof(Vertex, position));
+    // Normal
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex),
+        (GLvoid*)offsetof(Vertex, normal));
     // Texture coordinates
     glEnableVertexAttribArray(2);
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex),
@@ -34,7 +38,6 @@ Mesh::Mesh(const std::vector<Vertex>& vertices,
     // ...
 
     glBindVertexArray(0);
-
 
     m_numElements = indices.size();
 }
