@@ -20,14 +20,16 @@ std::vector<GLuint> indices = { 0, 1, 2, 0, 2, 3 };
 class TestApp: public Application
 {
 public:
-    TestApp()
-        : testMesh(vertices, indices),
-        testMat("textures/test.jpg")
+    TestApp() :
+        testMesh(vertices, indices),
+        testMat("textures/test.jpg"),
+        input(800, 600)
     {
-        Input::SetWindowSize(800, 600);
         testMat.color = glm::vec4(1,0,0,1);
         camera.Add<Camera>(800, 600);
         camera.Add<Transform>(glm::vec3(0, 0, 2));
+
+        SetInput(&input);
     }
 
 private:
@@ -37,9 +39,10 @@ private:
     TestMaterial testMat;
     Mesh testMesh;
 
+    Input input;
+
     void OnResize(int width, int height)
     {
-        Input::SetWindowSize(width, height);
         glViewport(0, 0, width, height);
         camera.Get<Camera>()->Set(width, height, 120, 0.1f, 10000.0f);
     }
@@ -60,7 +63,7 @@ private:
                 glm::vec3(0, 1, 0)
             );
 
-        if (Input::IsKeyPressed(GLFW_KEY_ESCAPE))
+        if (input.IsKeyPressed(GLFW_KEY_ESCAPE))
             exit(0);
     }
 };
