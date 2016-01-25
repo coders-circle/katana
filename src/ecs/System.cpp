@@ -24,4 +24,5 @@ bool System::Remove(Entity* entity)
 
 
     RemoveValue(m_entities, entity);
+    return true;
 }
