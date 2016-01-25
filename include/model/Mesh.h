@@ -11,6 +11,9 @@ struct Vertex {
     Vertex(const glm::vec3& position, const glm::vec2& texCoords)
         : position(position), texCoords(texCoords)
     {}
+    Vertex(const glm::vec3& position)
+        : position(position)
+    {}
 };
 
 
