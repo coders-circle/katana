@@ -8,14 +8,14 @@
 
 
 std::vector<Vertex> cubeVertices = std::vector<Vertex>{
-    Vertex(glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec2(0.0f, 0.0f)),
-    Vertex(glm::vec3( 0.5f, -0.5f,  0.5f), glm::vec2(1.0f, 0.0f)),
-    Vertex(glm::vec3( 0.5f,  0.5f,  0.5f), glm::vec2(1.0f, 1.0f)),
-    Vertex(glm::vec3(-0.5f,  0.5f,  0.5f), glm::vec2(0.0f, 1.0f)),
-    Vertex(glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec2(0.0f, 0.0f)),
-    Vertex(glm::vec3( 0.5f, -0.5f, -0.5f), glm::vec2(1.0f, 0.0f)),
-    Vertex(glm::vec3( 0.5f,  0.5f, -0.5f), glm::vec2(1.0f, 1.0f)),
-    Vertex(glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec2(0.0f, 1.0f)),
+    Vertex(glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec3(0, 0, 0), glm::vec2(0.0f, 0.0f)),
+    Vertex(glm::vec3( 0.5f, -0.5f,  0.5f), glm::vec3(0, 0, 0), glm::vec2(1.0f, 0.0f)),
+    Vertex(glm::vec3( 0.5f,  0.5f,  0.5f), glm::vec3(0, 0, 0), glm::vec2(1.0f, 1.0f)),
+    Vertex(glm::vec3(-0.5f,  0.5f,  0.5f), glm::vec3(0, 0, 0), glm::vec2(0.0f, 1.0f)),
+    Vertex(glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(0, 0, 0), glm::vec2(0.0f, 0.0f)),
+    Vertex(glm::vec3( 0.5f, -0.5f, -0.5f), glm::vec3(0, 0, 0), glm::vec2(1.0f, 0.0f)),
+    Vertex(glm::vec3( 0.5f,  0.5f, -0.5f), glm::vec3(0, 0, 0), glm::vec2(1.0f, 1.0f)),
+    Vertex(glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec3(0, 0, 0), glm::vec2(0.0f, 1.0f)),
 };
 
 std::vector<GLuint> cubeIndices = {
@@ -36,26 +36,26 @@ public:
     TestApp() :
         testMat("textures/test.jpg"),
         testModel("../model-converter/bin/homer.out"),
-        input(800, 600)
+        m_input(800, 600)
     {
-        Input::SetWindowSize(800, 600);
+        m_input.SetWindowSize(800, 600);
         testMat.color = glm::vec4(1,0,0,1);
         camera.Add<Camera>(800, 600);
         camera.Add<Transform>(glm::vec3(0, 0, 100));
-
-        SetInput(&input);
+        SetInput(&m_input);
     }
 
 private:
     glm::mat4 modelMat;
     Entity camera;
+    Input m_input;
 
     TestMaterial testMat;
     Model testModel;
 
     void OnResize(int width, int height)
     {
-        Input::SetWindowSize(width, height);
+        m_input.SetWindowSize(width, height);
         glViewport(0, 0, width, height);
         camera.Get<Camera>()->Set(width, height, 120, 0.1f, 10000.0f);
     }
@@ -76,7 +76,7 @@ private:
                 glm::vec3(0, 1, 0)
             );
 
-        if (Input::IsKeyPressed(GLFW_KEY_ESCAPE))
+        if (m_input.IsKeyPressed(GLFW_KEY_ESCAPE))
             exit(0);
     }
 };
@@ -86,10 +86,12 @@ class BlockTestApp: public Application
 {
 public:
     BlockTestApp()
+        :m_input(800, 600)
     {
         cam.Add<Camera>(800, 600);
         cam.Add<Transform>(glm::vec3(0, 10, 60));
         m_timer.Reset(10);
+        SetInput(&m_input);
     }
     void OnResize(int width, int height)
     {
@@ -103,20 +105,22 @@ public:
     }
     void OnUpdate(float dt)
     {
-        if(Input::IsKeyPressed(GLFW_KEY_LEFT))
+        if(m_input.IsKeyPressed(GLFW_KEY_LEFT))
             snake.SetDirection(west);
-        if(Input::IsKeyPressed(GLFW_KEY_RIGHT))
+        if(m_input.IsKeyPressed(GLFW_KEY_RIGHT))
             snake.SetDirection(east);
-        if(Input::IsKeyPressed(GLFW_KEY_UP))
+        if(m_input.IsKeyPressed(GLFW_KEY_UP))
             snake.SetDirection(north);
-        if(Input::IsKeyPressed(GLFW_KEY_DOWN))
+        if(m_input.IsKeyPressed(GLFW_KEY_DOWN))
             snake.SetDirection(south);
         snake.Update(dt);
-        if (Input::IsKeyPressed(GLFW_KEY_ESCAPE))
+        if (m_input.IsKeyPressed(GLFW_KEY_ESCAPE))
             exit(0);
     }
 private:
     Snake snake;
     Block block;
     Entity cam;
+
+    Input m_input;
 };

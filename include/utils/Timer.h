@@ -35,7 +35,7 @@ public:
             deltaTime = 1.0;
 
         // stop accumulation of small error
-        if (abs(deltaTime - m_target) < 1.0 / 4000.0f)
+        if (fabs(deltaTime - m_target) < 1.0 / 40000.0f)
             deltaTime = m_target;
 
         m_leftOver += deltaTime;

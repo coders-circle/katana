@@ -6,6 +6,10 @@ class Texture
 {
 public:
     Texture(const std::string& filename);
+    ~Texture()
+    {
+        glDeleteTextures(1, &m_texture);
+    }
 
     // Get size
     int GetWidth() const { return m_width; }
