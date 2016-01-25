@@ -2,6 +2,7 @@
 
 #include <GLFW/glfw3.h>
 #include <utils/Timer.h>
+#include <utils/Input.h>
 
 
 class Application

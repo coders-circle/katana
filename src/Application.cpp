@@ -24,7 +24,7 @@ Application::Application()
         throw Exception(std::string("Error ")
             + reinterpret_cast<const char*>(glewGetErrorString(GLEW_VERSION)));
     }
-    
+
     m_timer.Reset(60);
 
     // OpenGL initialization
@@ -40,7 +40,22 @@ Application::Application()
                 (Application*) glfwGetWindowUserPointer(window);
 
             app->OnResize(width, height);
-        });
+        }
+    );
+
+    glfwSetKeyCallback(m_window,
+        [](GLFWwindow* window, int key, int scancode, int action, int mods)
+        {
+            Input::SetKeyPressed(key, action == GLFW_PRESS || action == GLFW_REPEAT);
+        }
+    );
+
+    glfwSetCursorPosCallback(m_window,
+        [](GLFWwindow* window, double xpos, double ypos)
+        {
+            Input::SetCursorPos(xpos, ypos);
+        }
+    );
 }
 
 
@@ -71,4 +86,3 @@ void Application::Run()
         glfwPollEvents();
     }
 }
-

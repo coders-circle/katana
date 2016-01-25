@@ -35,6 +35,7 @@ private:
         glViewport(0, 0, width, height);
         projection = glm::perspective(120.0f, float(width)/float(height),
             0.1f, 10000.0f);
+        Input::SetWindowSize(width, height);
     }
 
     void OnRender()
@@ -45,6 +46,9 @@ private:
 
     void OnUpdate(float dt)
     {
+        if(Input::IsKeyPressed(GLFW_KEY_ESCAPE)){
+            exit(0);    
+        }
         modelMat =
             glm::translate(glm::mat4(), glm::vec3(0, 0, -2.f)) *
             glm::rotate(glm::mat4(), m_timer.GetTotalTime(),
