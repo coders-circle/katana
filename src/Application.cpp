@@ -72,6 +72,9 @@ Application::Application() :
                 app->m_input->SetCursorPos(xpos, ypos);
         }
     );
+
+
+    CreateDefaultShaders();
 }
 
 
@@ -101,4 +104,16 @@ void Application::Run()
         glfwSwapBuffers(m_window);
         glfwPollEvents();
     }
+}
+
+
+#include <material/Shader.h>
+
+void Application::CreateDefaultShaders()
+{
+    auto& sm = Manager<Shader>::GetShared();
+
+    sm.Add("test_vs", "shaders/vs_test.glsl", GL_VERTEX_SHADER);
+    sm.Add("test_fs", "shaders/fs_test.glsl", GL_FRAGMENT_SHADER);
+    sm.Add("block_fs", "shaders/fs_block.glsl", GL_FRAGMENT_SHADER);
 }

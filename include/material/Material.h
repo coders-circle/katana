@@ -5,9 +5,9 @@
 class Material
 {
 public:
-    Material(const std::vector<Shader>& shaders,
+    Material(const std::vector<Shader*>& shaders,
         bool useStdTransforms = true)
-        :m_program(shaders, useStdTransforms)
+        : m_program(shaders, useStdTransforms)
     {}
 
     virtual void Use()
@@ -32,9 +32,9 @@ class TestMaterial : public Material
 {
 public:
     TestMaterial(const std::string& textureFile)
-        : Material(std::vector<Shader> {
-            Shader("shaders/vs_test.glsl", GL_VERTEX_SHADER),
-            Shader("shaders/fs_test.glsl", GL_FRAGMENT_SHADER),
+        : Material(std::vector<Shader*> {
+            Manager<Shader>::GetShared().Get("test_vs"),
+            Manager<Shader>::GetShared().Get("test_fs"),
         }), texture(textureFile)
     {
         m_program.AddUniform("color");

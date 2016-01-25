@@ -7,9 +7,11 @@ class BlockMaterial: public Material
 {
 public:
     BlockMaterial()
-        : Material(std::vector<Shader> {
-            Shader("shaders/vs_block.glsl", GL_VERTEX_SHADER),
-            Shader("shaders/fs_block.glsl", GL_FRAGMENT_SHADER),
+        : Material(std::vector<Shader*> {
+            Manager<Shader>::GetShared().Get("test_vs"),
+            Manager<Shader>::GetShared().Get("block_fs"),
+            //Shader("shaders/vs_block.glsl", GL_VERTEX_SHADER),
+            //Shader("shaders/fs_block.glsl", GL_FRAGMENT_SHADER),
         })
     {
         m_program.AddUniform("color");

@@ -2,7 +2,7 @@
 #include <material/Program.h>
 
 
-Program::Program(const std::vector<Shader>& shaders,
+Program::Program(const std::vector<Shader*>& shaders,
     bool useStdTransforms)
     : m_useStdTransforms(useStdTransforms)
 {
@@ -10,10 +10,9 @@ Program::Program(const std::vector<Shader>& shaders,
     m_program = glCreateProgram();
 
     // Attach the shaders and link them
-    for (const Shader& s : shaders)
-        s.AttachTo(m_program);
+    for (Shader* s : shaders)
+        s->AttachTo(m_program);
     glLinkProgram(m_program);
-
 
     // Handle error
     GLint status = 0;
@@ -30,8 +29,8 @@ Program::Program(const std::vector<Shader>& shaders,
     }
 
     // Detach after link
-    for (const Shader& s: shaders)
-        s.DetachFrom(m_program);
+    for (Shader* s: shaders)
+        s->DetachFrom(m_program);
 
     if (useStdTransforms)
         AddStdTransforms();

@@ -22,6 +22,9 @@ public:
     }
     Input* GetInput() const { return m_input; }
 
+    // Add some default shaders
+    void CreateDefaultShaders();
+
 protected:
     GLFWwindow* m_window;
     virtual void OnUpdate(float) {}

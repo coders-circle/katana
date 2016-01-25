@@ -17,7 +17,7 @@ public:
 class Program
 {
 public:
-    Program(const std::vector<Shader>& shaders,
+    Program(const std::vector<Shader*>& shaders,
         bool useStdTransforms=true);
     ~Program()
     {
