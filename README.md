@@ -53,11 +53,13 @@ sudo apt-get install libsoil-dev
 ```
 
 
-### Building Katana
+### Building and Installing Katana
 
-Simply execute `make` to build the binaries, which are built into the *bin* directory. If error is encountered, try to clean up the previous build outputs using `make clean`.
+Simply execute `make` to build the libraries, which are built into the *bin* directory. If error is encountered, try to clean up the previous build outputs using `make clean`.
+To install the engine library, run `make install`.
 
 ```
 make clean
 make
+make install
 ```

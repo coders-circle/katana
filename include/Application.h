@@ -14,6 +14,14 @@ public:
 
     Timer& GetTimer() { return m_timer; }
 
+    void SetInput(Input* input)
+    {
+        m_input = input;
+        if (m_input)
+            m_input->SetWindowSize(m_width, m_height);
+    }
+    Input* GetInput() const { return m_input; }
+
 protected:
     GLFWwindow* m_window;
     virtual void OnUpdate(float) {}
@@ -21,4 +29,7 @@ protected:
     virtual void OnResize(int width, int height) {}
 
     Timer m_timer;
+    Input* m_input;
+
+    int m_width, m_height;
 };

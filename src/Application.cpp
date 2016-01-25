@@ -1,8 +1,9 @@
 #include <stdinc.h>
 #include <Application.h>
 
-Application::Application()
-    : m_timer(60)
+Application::Application() :
+    m_timer(60), m_input(0),
+    m_width(800), m_height(600)
 {
     if (!glfwInit())
     {
@@ -38,7 +39,11 @@ Application::Application()
         {
             Application* app =
                 (Application*) glfwGetWindowUserPointer(window);
+            app->m_width = width;
+            app->m_height = height;
 
+            if (app->m_input)
+                app->m_input->SetWindowSize(width, height);
             app->OnResize(width, height);
         }
     );
@@ -46,14 +51,23 @@ Application::Application()
     glfwSetKeyCallback(m_window,
         [](GLFWwindow* window, int key, int scancode, int action, int mods)
         {
-            Input::SetKeyPressed(key, action == GLFW_PRESS || action == GLFW_REPEAT);
+            Application* app =
+                (Application*) glfwGetWindowUserPointer(window);
+
+            if (app->m_input)
+                app->m_input->SetKeyPressed(key,
+                    action == GLFW_PRESS || action == GLFW_REPEAT);
         }
     );
 
     glfwSetCursorPosCallback(m_window,
         [](GLFWwindow* window, double xpos, double ypos)
         {
-            Input::SetCursorPos(xpos, ypos);
+            Application* app =
+                (Application*) glfwGetWindowUserPointer(window);
+
+            if (app->m_input)
+                app->m_input->SetCursorPos(xpos, ypos);
         }
     );
 }

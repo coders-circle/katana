@@ -16,10 +16,10 @@ OBJ_FILES = $(addprefix $(OBJ_DIR)/,$(CPP_FILES:src/%.cpp=%.o))
 
 ## Compiler, compiler and linker flags and libaries to use
 CXX := g++
-CXXLIBS := `pkg-config --cflags glfw3` -fPIC -Wall
+CXXLIBS := `pkg-config --cflags glfw3`
 LDLIBS := -lGLEW -lGL `pkg-config --libs --static glfw3` -lSOIL
 
-CXXFLAGS := -I include -MMD --std=c++11 $(CXXLIBS)
+CXXFLAGS := -fPIC -Wall -I include -MMD --std=c++11 $(CXXLIBS)
 LDFLAGS := -shared -std=c++11 $(LDLIBS)
 
 
