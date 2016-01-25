@@ -9,12 +9,17 @@ Model::Model(const std::string& path)
     m_scene = importer.ReadFile(path,
         aiProcess_Triangulate |
         aiProcess_GenSmoothNormals |
+        aiProcess_FlipUVs |
         aiProcess_JoinIdenticalVertices);
 
     if (!m_scene)
         throw std::runtime_error(
             "Error: Couldn't load scene from file: " + path
         );
+
+    // Load all materials from the scene
+    for (unsigned int i=0; i<m_scene->mNumMaterials; ++i)
+        LoadMaterial("mat"+std::to_string(i), m_scene->mMaterials[i]);
 
     // Load all meshes from the scene
     for (unsigned int i=0; i<m_scene->mNumMeshes; ++i)
@@ -30,6 +35,29 @@ void Model::LoadNode(aiNode* node)
     // Load the children nodes
     for (unsigned int i=0; i<node->mNumChildren; ++i)
         LoadNode(node->mChildren[i]);
+}
+
+
+void Model::LoadMaterial(const std::string& name, aiMaterial* material)
+{
+    Material m;
+
+    // Get diffuse color
+    aiColor3D color(0.f, 0.f, 0.f);
+    material->Get(AI_MATKEY_COLOR_DIFFUSE, color);
+    m.color = glm::vec4(color.r, color.g, color.b, 1.0f);
+
+    // Get texture path
+    if (material->GetTextureCount(aiTextureType_DIFFUSE) > 0)
+    {
+        aiString str;
+        material->GetTexture(aiTextureType_DIFFUSE, 0, &str);
+        m.texture = GetFilename(str.C_Str());
+    }
+    else
+        m.texture = "";
+
+    m_materials[name] = m;
 }
 
 
@@ -68,7 +96,12 @@ void Model::LoadMesh(aiMesh* mesh)
             indices.push_back(face.mIndices[j]);
     }
 
-    m_meshes.push_back(Mesh(vertices, indices));
+
+    Mesh m(vertices, indices);
+    // Set material
+    m.material = "mat" + std::to_string(mesh->mMaterialIndex);
+
+    m_meshes.push_back(m);
 }
 
 
@@ -76,6 +109,17 @@ void Model::Save(const std::string& path)
 {
     std::ofstream file(path, std::ios::out | std::ios::binary);
     unsigned int num;
+
+    // Save the materials
+    num = m_materials.size();
+    file.write((char*)&num, sizeof(num));
+    for (auto const& material: m_materials)
+    {
+        WriteString(file, material.first);
+        file.write((char*)&material.second.color[0],
+            sizeof(glm::vec4));
+        WriteString(file, material.second.texture);
+    }
 
     // Save the meshes
     num = m_meshes.size();
@@ -94,6 +138,9 @@ void Model::Save(const std::string& path)
         num = is.size();
         file.write((char*)&num, sizeof(num));
         file.write((char*)&is[0], is.size()*sizeof(unsigned int));
+
+        // Material
+        WriteString(file, mesh.material);
     }
 
     // TODO: Save nodes

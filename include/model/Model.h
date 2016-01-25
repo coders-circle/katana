@@ -12,12 +12,13 @@ public:
             delete mesh;
     }
 
-    void Draw(Material* material, const glm::mat4& model, const glm::mat4& vp)
+    void Render(const glm::mat4& model, const glm::mat4& vp)
     {
         for (Mesh* mesh: m_meshes)
-            mesh->Draw(material, model, vp);
+            mesh->Render(model, vp);
     }
 
 private:
     std::vector<Mesh*> m_meshes;
+    Manager<Material> m_materials;
 };

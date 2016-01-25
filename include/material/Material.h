@@ -10,6 +10,8 @@ public:
         : m_program(shaders, useStdTransforms)
     {}
 
+    virtual ~Material() {};
+
     virtual void Use()
     {
         m_program.Use();
@@ -22,33 +24,4 @@ public:
 
 protected:
     Program m_program;
-};
-
-
-#include <texture/Texture.h>
-
-
-class TestMaterial : public Material
-{
-public:
-    TestMaterial(const std::string& textureFile)
-        : Material(std::vector<Shader*> {
-            Manager<Shader>::GetShared().Get("test_vs"),
-            Manager<Shader>::GetShared().Get("test_fs"),
-        }), texture(textureFile)
-    {
-        m_program.AddUniform("color");
-        m_program.AddUniform("diffuseTexture");
-    }
-
-    glm::vec4 color;
-    Texture texture;
-
-    void SetUniforms()
-    {
-        m_program.SetUniform("color", color);
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, texture.GetTexture());
-        m_program.SetUniform("diffuseTexture", (int)0);
-    }
 };

@@ -8,7 +8,24 @@ Texture::Texture(const std::string& filename)
     unsigned char* image = SOIL_load_image(filename.c_str(),
         &m_width, &m_height, 0, SOIL_LOAD_RGBA);
 
-    // Create texture object
+    CreateTexture(image);
+
+    // Free the image data
+    SOIL_free_image_data(image);
+
+    // TODO: Exceptions
+}
+
+
+Texture::Texture(unsigned char* image, int width, int height)
+{
+    m_width = width;
+    m_height = height;
+    CreateTexture(image);
+}
+
+void Texture::CreateTexture(unsigned char* image)
+{    // Create texture object
     glGenTextures(1, &m_texture);
     glBindTexture(GL_TEXTURE_2D, m_texture);
 
@@ -17,9 +34,4 @@ Texture::Texture(const std::string& filename)
         0, GL_RGBA, GL_UNSIGNED_BYTE, image);
     glGenerateMipmap(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, 0);
-
-    // Free the image data
-    SOIL_free_image_data(image);
-
-    // TODO: Exceptions
 }

@@ -25,6 +25,14 @@ public:
         return item;
     }
 
+    template<class T1, class... Args>
+    T1* Add(const std::string& key, Args... args)
+    {
+        T1* item = new T1(args...);
+        m_items[key] = item;
+        return item;
+    }
+
     // Remove item for a key
     void Remove(const std::string& key)
     {
@@ -36,6 +44,8 @@ public:
     // Get item from key
     T* Get(const std::string& key)
     {
+        if (m_items.find(key) == m_items.end())
+            return 0;
         return m_items[key];
     }
 

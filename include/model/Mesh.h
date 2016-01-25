@@ -35,10 +35,13 @@ public:
         glDeleteBuffers(1, &m_ebo);
     }
 
-    void Draw(Material* material, const glm::mat4& model, const glm::mat4& vp);
+    void Render(const glm::mat4& model, const glm::mat4& vp);
 
     size_t GetNumTriangles() const { return m_numElements/3; }
 
+    void SetMaterial(Material* material) { m_material = material; }
+
 private:
     GLuint m_vao, m_vbo, m_ebo, m_numElements;
+    Material* m_material;
 };

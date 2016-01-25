@@ -24,6 +24,8 @@ public:
 
     // Add some default shaders
     void CreateDefaultShaders();
+    // Add some default textures
+    void CreateDefaultTextures();
 
 protected:
     GLFWwindow* m_window;

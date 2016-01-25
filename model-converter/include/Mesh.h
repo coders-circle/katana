@@ -25,6 +25,7 @@ public:
 
     std::vector<Vertex>& GetVertices() { return m_vertices; }
     std::vector<unsigned int>& GetIndices() { return m_indices; }
+    std::string material;
 
 private:
     std::vector<Vertex> m_vertices;

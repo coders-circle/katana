@@ -6,6 +6,8 @@ class Texture
 {
 public:
     Texture(const std::string& filename);
+    Texture(unsigned char* image, int width, int height);
+
     ~Texture()
     {
         glDeleteTextures(1, &m_texture);
@@ -21,4 +23,6 @@ public:
 private:
     int m_width, m_height;
     GLuint m_texture;
+
+    void CreateTexture(unsigned char* image);
 };

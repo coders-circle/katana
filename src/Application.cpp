@@ -75,6 +75,7 @@ Application::Application() :
 
 
     CreateDefaultShaders();
+    CreateDefaultTextures();
 }
 
 
@@ -113,7 +114,19 @@ void Application::CreateDefaultShaders()
 {
     auto& sm = Manager<Shader>::GetShared();
 
-    sm.Add("test_vs", "shaders/vs_test.glsl", GL_VERTEX_SHADER);
-    sm.Add("test_fs", "shaders/fs_test.glsl", GL_FRAGMENT_SHADER);
-    sm.Add("block_fs", "shaders/fs_block.glsl", GL_FRAGMENT_SHADER);
+    sm.Add("vs_diffuse", "shaders/vs_diffuse.glsl", GL_VERTEX_SHADER);
+    sm.Add("fs_diffuse", "shaders/fs_diffuse.glsl", GL_FRAGMENT_SHADER);
+}
+
+
+#include <texture/Texture.h>
+
+void Application::CreateDefaultTextures()
+{
+    auto& tm = Manager<Texture>::GetShared();
+
+    std::vector<unsigned char> wh;
+    for (int i=0; i<4*4; ++i)
+        wh.push_back(0xFF);
+    tm.Add("white", &wh[0], 1, 1);
 }

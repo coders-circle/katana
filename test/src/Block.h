@@ -3,42 +3,20 @@
 #include <stdinc.h>
 #include <model/Mesh.h>
 
-class BlockMaterial: public Material
-{
-public:
-    BlockMaterial()
-        : Material(std::vector<Shader*> {
-            Manager<Shader>::GetShared().Get("test_vs"),
-            Manager<Shader>::GetShared().Get("block_fs"),
-            //Shader("shaders/vs_block.glsl", GL_VERTEX_SHADER),
-            //Shader("shaders/fs_block.glsl", GL_FRAGMENT_SHADER),
-        })
-    {
-        m_program.AddUniform("color");
-    }
-
-    glm::vec4 color;
-
-    void SetUniforms()
-    {
-        m_program.SetUniform("color", color);
-    }
-};
-
 
 class Block
 {
 public:
     Block():
         m_mesh(std::vector<Vertex>{
-            Vertex(glm::vec3(-0.4f, -0.4f,  0.4f)),
-            Vertex(glm::vec3( 0.4f, -0.4f,  0.4f)),
-            Vertex(glm::vec3( 0.4f,  0.4f,  0.4f)),
-            Vertex(glm::vec3(-0.4f,  0.4f,  0.4f)),
-            Vertex(glm::vec3(-0.4f, -0.4f, -0.4f)),
-            Vertex(glm::vec3( 0.4f, -0.4f, -0.4f)),
-            Vertex(glm::vec3( 0.4f,  0.4f, -0.4f)),
-            Vertex(glm::vec3(-0.4f,  0.4f, -0.4f)),
+            Vertex(glm::vec3(-0.4f, -0.4f,  0.4f), glm::vec3(-0.4f, -0.4f,  0.4f), glm::vec2(0)),
+            Vertex(glm::vec3( 0.4f, -0.4f,  0.4f), glm::vec3( 0.4f, -0.4f,  0.4f), glm::vec2(0)),
+            Vertex(glm::vec3( 0.4f,  0.4f,  0.4f), glm::vec3( 0.4f,  0.4f,  0.4f), glm::vec2(0)),
+            Vertex(glm::vec3(-0.4f,  0.4f,  0.4f), glm::vec3(-0.4f,  0.4f,  0.4f), glm::vec2(0)),
+            Vertex(glm::vec3(-0.4f, -0.4f, -0.4f), glm::vec3(-0.4f, -0.4f, -0.4f), glm::vec2(0)),
+            Vertex(glm::vec3( 0.4f, -0.4f, -0.4f), glm::vec3( 0.4f, -0.4f, -0.4f), glm::vec2(0)),
+            Vertex(glm::vec3( 0.4f,  0.4f, -0.4f), glm::vec3( 0.4f,  0.4f, -0.4f), glm::vec2(0)),
+            Vertex(glm::vec3(-0.4f,  0.4f, -0.4f), glm::vec3(-0.4f,  0.4f, -0.4f), glm::vec2(0)),
         }, {
             0, 1, 2, 0, 2, 3,   // front face
             4, 5, 6, 4, 6, 7,   // back face
@@ -55,7 +33,8 @@ public:
 
     void Render(glm::mat4 vp)
     {
-        m_mesh.Draw(&m_material, m_modelMatrix, vp);
+        m_mesh.SetMaterial(&m_material);
+        m_mesh.Render(m_modelMatrix, vp);
     }
 
     void SetPosition(glm::vec3 pos)
@@ -71,6 +50,6 @@ public:
 protected:
     glm::mat4 m_modelMatrix;
     Mesh m_mesh;
-    BlockMaterial m_material;
+    DiffuseMaterial m_material;
     glm::vec3 m_pos;
 };

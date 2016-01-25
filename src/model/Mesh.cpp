@@ -4,6 +4,7 @@
 
 Mesh::Mesh(const std::vector<Vertex>& vertices,
     const std::vector<GLuint>& indices)
+    : m_material(0)
 {
     // Generate buffers and arrays
     glGenBuffers(1, &m_vbo);
@@ -43,16 +44,20 @@ Mesh::Mesh(const std::vector<Vertex>& vertices,
 }
 
 
-void Mesh::Draw(Material* material, const glm::mat4& model, const glm::mat4& vp)
+void Mesh::Render(const glm::mat4& model, const glm::mat4& vp)
 {
-    material->Use();
-
-    Program& p = material->GetProgram();
-    if (p.DoUseStdTransforms())
+    if (m_material)
     {
-        p.SetUniform("mvpMatrix", vp * model);
-        p.SetUniform("modelMatrix", model);
+        m_material->Use();
+
+        Program& p = m_material->GetProgram();
+        if (p.DoUseStdTransforms())
+        {
+            p.SetUniform("mvpMatrix", vp * model);
+            p.SetUniform("modelMatrix", model);
+        }
     }
+
     glBindVertexArray(m_vao);
     glDrawElements(GL_TRIANGLES, m_numElements, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);

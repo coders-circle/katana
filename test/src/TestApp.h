@@ -1,9 +1,12 @@
 #include <Application.h>
 #include <model/Mesh.h>
 #include <model/Model.h>
+#include <material/DiffuseMaterial.h>
+
 #include <ecs/ecs.h>
 #include <component/Transform.h>
 #include <component/Camera.h>
+
 #include "Snake.h"
 
 
@@ -34,12 +37,10 @@ class TestApp: public Application
 {
 public:
     TestApp() :
-        testMat("textures/test.jpg"),
         testModel("../model-converter/bin/homer.out"),
         m_input(800, 600)
     {
         m_input.SetWindowSize(800, 600);
-        testMat.color = glm::vec4(1,0,0,1);
         camera.Add<Camera>(800, 600);
         camera.Add<Transform>(glm::vec3(0, 0, 100));
         SetInput(&m_input);
@@ -50,7 +51,6 @@ private:
     Entity camera;
     Input m_input;
 
-    TestMaterial testMat;
     Model testModel;
 
     void OnResize(int width, int height)
@@ -66,7 +66,7 @@ private:
             * camera.Get<Transform>()->GetWorldInverse();
             
         // Draw the test model with test material
-        testModel.Draw(&testMat, modelMat, vp);
+        testModel.Render(modelMat, vp);
     }
 
     void OnUpdate(float dt)
