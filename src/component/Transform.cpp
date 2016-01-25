@@ -1,6 +1,5 @@
 #include <stdinc.h>
-#include <ecs/ecs.h>
-#include <ecs/Transform.h>
+#include <component/Transform.h>
 
 
 void Transform::SetParent(Transform* parent)

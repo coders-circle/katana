@@ -1,5 +1,5 @@
 ## Directories for source files
-SRC_DIRS := utils ecs material model texture
+SRC_DIRS := utils ecs material model texture component
 
 
 ## Directories to build files into
@@ -16,17 +16,17 @@ OBJ_FILES = $(addprefix $(OBJ_DIR)/,$(CPP_FILES:src/%.cpp=%.o))
 
 ## Compiler, compiler and linker flags and libaries to use
 CXX := g++
-CXXLIBS := `pkg-config --cflags glfw3`
+CXXLIBS := `pkg-config --cflags glfw3` -fPIC -Wall
 LDLIBS := -lGLEW -lGL `pkg-config --libs --static glfw3` -lSOIL
 
 CXXFLAGS := -I include -MMD --std=c++11 $(CXXLIBS)
-LDFLAGS := --std=c++11 $(LDLIBS)
+LDFLAGS := -shared -std=c++11 $(LDLIBS)
 
 
 ## Build applications
-all: $(BIN_DIR)/katana-test
+all: $(BIN_DIR)/libkatana.so
 
-$(BIN_DIR)/katana-test: $(OBJ_FILES) | $(BIN_DIR)
+$(BIN_DIR)/libkatana.so: $(OBJ_FILES) | $(BIN_DIR)
 	$(CXX) -o $@ $^ $(LDFLAGS)
 
 $(OBJ_DIR)/%.o: src/%.cpp | $(OBJ_DIR)
@@ -38,6 +38,12 @@ $(BIN_DIR):
 
 $(OBJ_DIR):
 	mkdir $(OBJ_DIR) $(SRC_DIRS:%=$(OBJ_DIR)/%)
+
+
+# Install the library
+install:
+	cp $(BIN_DIR)/libkatana.so /usr/lib
+	ldconfig -v -n /usr/lib
 
 
 ## Clean up everything
