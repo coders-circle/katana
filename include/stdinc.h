@@ -33,3 +33,4 @@
 #include <utils/Exception.h>
 #include <utils/ListUtils.h>
 #include <utils/FileUtils.h>
+#include <utils/Manager.h>

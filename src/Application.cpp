@@ -1,6 +1,7 @@
 #include <stdinc.h>
 #include <Application.h>
 
+
 Application::Application() :
     m_timer(60), m_input(0),
     m_width(800), m_height(600)
