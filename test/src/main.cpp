@@ -6,7 +6,8 @@ int main()
 {
     try
     {
-        BlockTestApp app;
+        // BlockTestApp app;
+        TestApp app;
         app.Run();
     }
     catch (const std::exception& e)

@@ -5,15 +5,18 @@
 // Vertex structure
 struct Vertex {
     glm::vec3 position;
-    // glm::vec3 normal;
+    glm::vec3 normal;
     glm::vec2 texCoords;
 
-    Vertex(const glm::vec3& position, const glm::vec2& texCoords)
-        : position(position), texCoords(texCoords)
+    Vertex(const glm::vec3& position,
+    const glm::vec3& normal, const glm::vec2& texCoords)
+        : position(position), normal(normal), texCoords(texCoords)
     {}
     Vertex(const glm::vec3& position)
         : position(position)
     {}
+
+    Vertex() {}
 };
 
 
