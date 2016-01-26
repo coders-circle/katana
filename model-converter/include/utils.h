@@ -1,5 +1,5 @@
 #pragma once
-
+#include <FileUtils.h>
 
 inline glm::mat4 AiToGlmMatrix(aiMatrix4x4 &aiMat)
 {
@@ -15,24 +15,4 @@ inline glm::mat4 AiToGlmMatrix(aiMatrix4x4 &aiMat)
     return glm::translate(glm::mat4(), pos)
         * glm::mat4_cast(rot)
         * glm::scale(glm::mat4(), scale);
-}
-
-
-inline std::string GetFilename(const std::string& path)
-{
-    std::string temp = path;
-
-    size_t s = temp.find_last_of("/");
-    if (s != std::string::npos)
-        temp = temp.substr(s+1, temp.size()-s-1);
-
-    return temp;
-}
-
-
-inline void WriteString(std::ofstream& file, const std::string& string)
-{
-    unsigned int num = string.size();
-    file.write((char*)&num, sizeof(num));
-    file.write(string.c_str(), num);
 }

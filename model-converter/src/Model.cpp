@@ -3,6 +3,7 @@
 
 
 Model::Model(const std::string& path)
+    : m_path(path)
 {
     // Import the model from the path to a scene
     Assimp::Importer importer;
@@ -119,6 +120,9 @@ void Model::Save(const std::string& path)
         file.write((char*)&material.second.color[0],
             sizeof(glm::vec4));
         WriteString(file, material.second.texture);
+
+        // Also try and copy the texture
+        CopyTexture(path, material.second.texture);
     }
 
     // Save the meshes
@@ -144,4 +148,21 @@ void Model::Save(const std::string& path)
     }
 
     // TODO: Save nodes
+}
+
+
+void Model::CopyTexture(const std::string& dest,
+    const std::string& filename)
+{
+    std::string destFolder = GetFolder(dest);
+    int status = CreateDirectory(destFolder+"/textures/");
+
+    // TODO: Check status
+
+    // Check if file exists
+    std::string folder = GetFolder(m_path);
+    if (!DoesFileExist(folder + "/" + filename))
+        std::cout << "Couldn't find texture " << filename << std::endl;
+
+    CopyFile(folder+"/"+filename, destFolder+"/textures/"+filename);
 }

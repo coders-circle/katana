@@ -2,10 +2,13 @@
 #include <texture/Texture.h>
 
 
-Texture::Texture(const std::string& filename)
+Texture::Texture(const std::string& path)
 {
+    if (!DoesFileExist(path))
+        throw FileNotFoundError(path);
+
     // Load the image
-    unsigned char* image = SOIL_load_image(filename.c_str(),
+    unsigned char* image = SOIL_load_image(path.c_str(),
         &m_width, &m_height, 0, SOIL_LOAD_RGBA);
 
     CreateTexture(image);

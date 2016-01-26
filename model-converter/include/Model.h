@@ -23,4 +23,8 @@ private:
     const aiScene* m_scene;
     std::map<std::string, Material> m_materials;
     std::vector<Mesh> m_meshes;
+
+    std::string m_path;
+
+    void CopyTexture(const std::string& dest, const std::string& filename);
 };
